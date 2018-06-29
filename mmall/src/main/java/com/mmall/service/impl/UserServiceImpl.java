@@ -39,5 +39,35 @@ public class UserServiceImpl implements UserService {
 		user.setPassword("");
 		return  ResponseMessage.successWithData(user);
 	}
+	/**
+	 * 新增用户信息
+	 */
+	public ResponseMessage<String> addUser(User user) {
+		if(null == user){
+			
+			return ResponseMessage.errorWithMessage("参数为空");
+		}
+		if(null == user.getUsername() || null ==user.getPassword()){
+			return ResponseMessage.errorWithMessage("用户名或者密码都不能为空");
+		}
+		//1 首先查找用户是否存在
+		String md5EncodeUtf8 = MD5Util.MD5EncodeUtf8(user.getPassword());
+		User getUser=	userMapper.findUserByNaAndPs(user.getUsername(),md5EncodeUtf8);
+		
+		if(null != getUser){
+			log.error("用户已存在");
+			return ResponseMessage.errorWithMessage("用户已存在");
+		}
+		//密码加密处理
+		//保存用户
+		user.setPassword(md5EncodeUtf8);
+		int count=userMapper.insertSelective(user);
+		
+	if(count>0){
+	
+		return ResponseMessage.successWithMessage("添加用户成功");
+	}
+		return ResponseMessage.successWithMessage("添加用户失败");
+	}
 
 }

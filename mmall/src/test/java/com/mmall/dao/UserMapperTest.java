@@ -18,8 +18,15 @@ public class UserMapperTest {
 	public void testSelectByPrimaryKey() {
 		
 	
-		User selectByPrimaryKey = userMapper.selectByPrimaryKey(1);
-		System.out.println(selectByPrimaryKey.getUsername());
+		User user =userMapper.selectByPrimaryKey(1);		
+		System.out.println(user.getUsername());
+	}
+	@Test
+	public void testFindUserByNaAndPass(){
+		
+	
+		User user =userMapper.findUserByNaAndPs("admin", "admin");
+		System.out.println(user.getUsername());
 	}
 
 }

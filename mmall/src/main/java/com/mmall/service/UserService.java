@@ -7,4 +7,6 @@ public interface UserService {
 
 	ResponseMessage<User> findUserByNameAndPassword(String username,String password);
 
+	ResponseMessage<String> addUser(User user);
+
 }

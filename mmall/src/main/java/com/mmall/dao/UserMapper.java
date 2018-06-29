@@ -1,5 +1,7 @@
 package com.mmall.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mmall.pojo.User;
 
 public interface UserMapper {
@@ -16,5 +18,5 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
 
-	User findUserByNaAndPs(String username, String password);
+	User findUserByNaAndPs(@Param("username")String username,@Param("password") String password);
 }

@@ -20,7 +20,7 @@ public class PropertiesUtil {
         try {
             props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
         } catch (IOException e) {
-            logger.error("閰嶇疆鏂囦欢璇诲彇寮傚父",e);
+            logger.error("加载文件异常",e);
         }
     }
 
