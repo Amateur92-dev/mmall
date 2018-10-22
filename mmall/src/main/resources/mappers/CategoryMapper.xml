@@ -114,4 +114,15 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
+  <!-- 查询所有Top节点 -->
+  <select id="selectAllTopCategorys" resultMap="BaseResultMap">
+  	select * from mmall_category where parent_id=0
+  </select>
+  
+  <select id="selcetChildByParentId" parameterType="Integer" resultMap="BaseResultMap">
+  
+   select * from mmall_category where parent_id=#{categoeyId}
+  </select>
 </mapper>

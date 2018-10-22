@@ -3,9 +3,9 @@ package com.mmall.pojo;
 import java.io.Serializable;
 
 public class ProductWithBLOBs extends Product implements Serializable {
-    private String subImages;
+    private String subImages;//子图
 
-    private String detail;
+    private String detail;//商品详情
 
     private static final long serialVersionUID = 1L;
 

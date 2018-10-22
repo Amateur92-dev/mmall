@@ -5,11 +5,25 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="standard" jdbcType="VARCHAR" property="standard" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
     <result column="subtitle" jdbcType="VARCHAR" property="subtitle" />
     <result column="main_image" jdbcType="VARCHAR" property="mainImage" />
-    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="purchase_price" jdbcType="DECIMAL" property="purchasePrice" />
+    <result column="price_type" jdbcType="INTEGER" property="priceType" />
+    <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="country" jdbcType="INTEGER" property="country" />
+    <result column="trophic_category" jdbcType="INTEGER" property="trophicCategory" />
+    <result column="bar_code" jdbcType="VARCHAR" property="barCode" />
     <result column="stock" jdbcType="INTEGER" property="stock" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="tax_rate" jdbcType="DOUBLE" property="taxRate" />
+    <result column="production_date" jdbcType="TIMESTAMP" property="productionDate" />
+    <result column="expiry_date" jdbcType="TIMESTAMP" property="expiryDate" />
+    <result column="shelf_time" jdbcType="TIMESTAMP" property="shelfTime" />
+    <result column="quality_guarantee" jdbcType="VARCHAR" property="qualityGuarantee" />
+    <result column="departure_address" jdbcType="VARCHAR" property="departureAddress" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
@@ -18,7 +32,10 @@
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, category_id, name, subtitle, main_image, price, stock, status, create_time, update_time
+    id, category_id, name, standard, brand, subtitle, main_image, purchase_price, price_type, 
+    retail_price, weight, country, trophic_category, bar_code, stock, status, tax_rate, 
+    production_date, expiry_date, shelf_time, quality_guarantee, departure_address, create_time, 
+    update_time
   </sql>
   <sql id="Blob_Column_List">
     sub_images, detail
@@ -37,15 +54,23 @@
   </delete>
   <insert id="insert" parameterType="com.mmall.pojo.ProductWithBLOBs">
     insert into mmall_product (id, category_id, name, 
-      subtitle, main_image, price, 
-      stock, status, create_time, 
-      update_time, sub_images, detail
-      )
+      standard, brand, subtitle, 
+      main_image, purchase_price, price_type, 
+      retail_price, weight, country, 
+      trophic_category, bar_code, stock, 
+      status, tax_rate, production_date, 
+      expiry_date, shelf_time, quality_guarantee, 
+      departure_address, create_time, update_time, 
+      sub_images, detail)
     values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{subtitle,jdbcType=VARCHAR}, #{mainImage,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
-      #{stock,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{subImages,jdbcType=LONGVARCHAR}, #{detail,jdbcType=LONGVARCHAR}
-      )
+      #{standard,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, 
+      #{mainImage,jdbcType=VARCHAR}, #{purchasePrice,jdbcType=DECIMAL}, #{priceType,jdbcType=INTEGER}, 
+      #{retailPrice,jdbcType=DECIMAL}, #{weight,jdbcType=DOUBLE}, #{country,jdbcType=INTEGER}, 
+      #{trophicCategory,jdbcType=INTEGER}, #{barCode,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{taxRate,jdbcType=DOUBLE}, #{productionDate,jdbcType=TIMESTAMP}, 
+      #{expiryDate,jdbcType=TIMESTAMP}, #{shelfTime,jdbcType=TIMESTAMP}, #{qualityGuarantee,jdbcType=VARCHAR}, 
+      #{departureAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{subImages,jdbcType=LONGVARCHAR}, #{detail,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.mmall.pojo.ProductWithBLOBs">
     insert into mmall_product
@@ -59,20 +84,62 @@
       <if test="name != null">
         name,
       </if>
+      <if test="standard != null">
+        standard,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
       <if test="subtitle != null">
         subtitle,
       </if>
       <if test="mainImage != null">
         main_image,
       </if>
-      <if test="price != null">
-        price,
+      <if test="purchasePrice != null">
+        purchase_price,
+      </if>
+      <if test="priceType != null">
+        price_type,
+      </if>
+      <if test="retailPrice != null">
+        retail_price,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="trophicCategory != null">
+        trophic_category,
+      </if>
+      <if test="barCode != null">
+        bar_code,
       </if>
       <if test="stock != null">
         stock,
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="taxRate != null">
+        tax_rate,
+      </if>
+      <if test="productionDate != null">
+        production_date,
+      </if>
+      <if test="expiryDate != null">
+        expiry_date,
+      </if>
+      <if test="shelfTime != null">
+        shelf_time,
+      </if>
+      <if test="qualityGuarantee != null">
+        quality_guarantee,
+      </if>
+      <if test="departureAddress != null">
+        departure_address,
       </if>
       <if test="createTime != null">
         create_time,
@@ -97,20 +164,62 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="standard != null">
+        #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
       <if test="subtitle != null">
         #{subtitle,jdbcType=VARCHAR},
       </if>
       <if test="mainImage != null">
         #{mainImage,jdbcType=VARCHAR},
       </if>
-      <if test="price != null">
-        #{price,jdbcType=DECIMAL},
+      <if test="purchasePrice != null">
+        #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="priceType != null">
+        #{priceType,jdbcType=INTEGER},
+      </if>
+      <if test="retailPrice != null">
+        #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=INTEGER},
+      </if>
+      <if test="trophicCategory != null">
+        #{trophicCategory,jdbcType=INTEGER},
+      </if>
+      <if test="barCode != null">
+        #{barCode,jdbcType=VARCHAR},
       </if>
       <if test="stock != null">
         #{stock,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="taxRate != null">
+        #{taxRate,jdbcType=DOUBLE},
+      </if>
+      <if test="productionDate != null">
+        #{productionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiryDate != null">
+        #{expiryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shelfTime != null">
+        #{shelfTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qualityGuarantee != null">
+        #{qualityGuarantee,jdbcType=VARCHAR},
+      </if>
+      <if test="departureAddress != null">
+        #{departureAddress,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -135,20 +244,62 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="standard != null">
+        standard = #{standard,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
       <if test="subtitle != null">
         subtitle = #{subtitle,jdbcType=VARCHAR},
       </if>
       <if test="mainImage != null">
         main_image = #{mainImage,jdbcType=VARCHAR},
       </if>
-      <if test="price != null">
-        price = #{price,jdbcType=DECIMAL},
+      <if test="purchasePrice != null">
+        purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="priceType != null">
+        price_type = #{priceType,jdbcType=INTEGER},
+      </if>
+      <if test="retailPrice != null">
+        retail_price = #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=INTEGER},
+      </if>
+      <if test="trophicCategory != null">
+        trophic_category = #{trophicCategory,jdbcType=INTEGER},
+      </if>
+      <if test="barCode != null">
+        bar_code = #{barCode,jdbcType=VARCHAR},
       </if>
       <if test="stock != null">
         stock = #{stock,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="taxRate != null">
+        tax_rate = #{taxRate,jdbcType=DOUBLE},
+      </if>
+      <if test="productionDate != null">
+        production_date = #{productionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiryDate != null">
+        expiry_date = #{expiryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shelfTime != null">
+        shelf_time = #{shelfTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qualityGuarantee != null">
+        quality_guarantee = #{qualityGuarantee,jdbcType=VARCHAR},
+      </if>
+      <if test="departureAddress != null">
+        departure_address = #{departureAddress,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -169,11 +320,25 @@
     update mmall_product
     set category_id = #{categoryId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
       subtitle = #{subtitle,jdbcType=VARCHAR},
       main_image = #{mainImage,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
+      purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+      price_type = #{priceType,jdbcType=INTEGER},
+      retail_price = #{retailPrice,jdbcType=DECIMAL},
+      weight = #{weight,jdbcType=DOUBLE},
+      country = #{country,jdbcType=INTEGER},
+      trophic_category = #{trophicCategory,jdbcType=INTEGER},
+      bar_code = #{barCode,jdbcType=VARCHAR},
       stock = #{stock,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
+      tax_rate = #{taxRate,jdbcType=DOUBLE},
+      production_date = #{productionDate,jdbcType=TIMESTAMP},
+      expiry_date = #{expiryDate,jdbcType=TIMESTAMP},
+      shelf_time = #{shelfTime,jdbcType=TIMESTAMP},
+      quality_guarantee = #{qualityGuarantee,jdbcType=VARCHAR},
+      departure_address = #{departureAddress,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       sub_images = #{subImages,jdbcType=LONGVARCHAR},
@@ -184,11 +349,25 @@
     update mmall_product
     set category_id = #{categoryId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
+      standard = #{standard,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
       subtitle = #{subtitle,jdbcType=VARCHAR},
       main_image = #{mainImage,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
+      purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+      price_type = #{priceType,jdbcType=INTEGER},
+      retail_price = #{retailPrice,jdbcType=DECIMAL},
+      weight = #{weight,jdbcType=DOUBLE},
+      country = #{country,jdbcType=INTEGER},
+      trophic_category = #{trophicCategory,jdbcType=INTEGER},
+      bar_code = #{barCode,jdbcType=VARCHAR},
       stock = #{stock,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
+      tax_rate = #{taxRate,jdbcType=DOUBLE},
+      production_date = #{productionDate,jdbcType=TIMESTAMP},
+      expiry_date = #{expiryDate,jdbcType=TIMESTAMP},
+      shelf_time = #{shelfTime,jdbcType=TIMESTAMP},
+      quality_guarantee = #{qualityGuarantee,jdbcType=VARCHAR},
+      departure_address = #{departureAddress,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
