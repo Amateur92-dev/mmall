@@ -52,5 +52,6 @@
         <!-- 给出需要扫描的Dao接口-->
         <property name="basePackage" value="com.mmall.dao"/>
     </bean>
-
+    <!-- Spring上下文工具类，用于工具类中获取bean -->
+	<bean class="com.mmall.util.SpringContext"/>
 </beans>
